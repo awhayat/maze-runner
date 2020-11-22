@@ -135,6 +135,7 @@ public class GUI {
             jsonWriter.open();
             jsonWriter.write(collection);
             jsonWriter.close();
+            JOptionPane.showMessageDialog(window, "Saved your mazes to: " + JSON_STORE);
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(window, "Unable to write to file: " + JSON_STORE);
         }
