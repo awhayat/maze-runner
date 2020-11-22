@@ -137,7 +137,8 @@ public class GUI {
             jsonWriter.close();
             JOptionPane.showMessageDialog(window, "Saved your mazes to: " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(window, "Unable to write to file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(window, "Unable to write to file: " + JSON_STORE
+                    + "\nPlease ensure your data folder is in the same directory as Maze Runner.jar");
         }
     }
 
@@ -147,7 +148,8 @@ public class GUI {
         try {
             collection = jsonReader.read();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(window, "Unable to read from file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(window, "Unable to read from file: " + JSON_STORE
+                    + "\nPlease ensure your data folder is in the same directory as Maze Runner.jar");
         }
 
         mainMenu();
