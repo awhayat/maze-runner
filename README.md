@@ -1,7 +1,5 @@
 # Maze Runner
 
-#### Usage: download Maze Runner App and run jar file.
-
 This app presents a maze occupied by a controllable on-screen character. As you move through the maze, every action you take is recorded, and a password can be generated at any time based on their order. For example:
 
 - moving left
