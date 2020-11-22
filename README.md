@@ -13,7 +13,7 @@ This app presents a maze occupied by a controllable on-screen character. As you 
 
 The same password is regenerated when you move through the same maze in the same manner.
 
-Today we handle a huge variety of online accounts. Some are minor or of little importance, but others require strong, unique passwords that are updated regularly, such as online banking, education, and social media. One way to keep effective passwords is to store them in a password manager program. However, by doing so you are "putting all your eggs in one basket" provided by a 3rd party company, and you still need to keep your master password secure. Password managers can and have been hacked.
+Today we handle a huge variety of online accounts. Some are minor or of little importance, but others require strong, unique passwords that are updated regularly, such as online banking, education, and social media. One way to keep effective passwords is to store them in a password manager program. However, by doing so you are "putting all your eggs in one basket" provided by a third party company, and you still need to keep your master password secure. Password managers can and have been hacked.
 
 With the Maze Runner, your password(s) isn't stored anywhere at all; it is generated upon request. Even if someone gains access to your app files, they will not be able to extract any password unless they know exactly which maze to use, and exactly what kind of path to take through it.
 
