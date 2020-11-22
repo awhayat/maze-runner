@@ -18,3 +18,8 @@ Today we handle a huge variety of online accounts. Some are minor or of little i
 With the Maze Runner, your password(s) isn't stored anywhere at all; it is generated upon request. Even if someone gains access to your app files, they will not be able to extract any password unless they know exactly which maze to use, and exactly what kind of path to take through it.
 
 ![screenshot](https://github.com/awhayat/maze-runner/blob/main/screenshot.PNG)
+
+#### Future updates (make path easier to remember):
+- update mazes from "random" walls to orderly corridors
+- add target locations to each maze
+- add option to name a maze based on the account its password is used for
