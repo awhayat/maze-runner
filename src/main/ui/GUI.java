@@ -24,6 +24,9 @@ public class GUI {
     // image from https://www.netclipart.com/pp/m/12-122800_person-running-clipart.png (non-commercial use)
 
     private MazeCollection collection;
+    private final int MAX_MAZES = 60;
+    private int currentMazeNum;
+
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/MazeCollection.json";
@@ -51,7 +54,7 @@ public class GUI {
     // EFFECTS: runs the Maze Runner application
     public GUI() {
         init();
-        mainMenu();
+        displayMenu();
     }
 
     // MODIFIES: this
@@ -90,8 +93,8 @@ public class GUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: fills window with menu contents
-    private void mainMenu() {
+    // EFFECTS: fills window with main menu contents
+    private void displayMenu() {
         window.getContentPane().removeAll();
         window.repaint();
         window.revalidate();
@@ -99,7 +102,8 @@ public class GUI {
         JButton add = newButton("Add", W_WIDTH - B_WIDTH - 20, 5, B_WIDTH, B_HEIGHT, B_COLOUR, true);
         add.addActionListener(e -> addMaze());
 
-        JButton save = newButton("Save", W_WIDTH - B_WIDTH - 20, 10 + B_HEIGHT, B_WIDTH, B_HEIGHT, B_COLOUR, true);
+        JButton save = newButton("Save", W_WIDTH - B_WIDTH - 20, 10 + B_HEIGHT, B_WIDTH, B_HEIGHT,
+                B_COLOUR, true);
         save.addActionListener(e -> saveMazeCollection());
 
         JButton load = newButton("Load", W_WIDTH - B_WIDTH - 20, 15 + (2 * B_HEIGHT), B_WIDTH, B_HEIGHT,
@@ -123,10 +127,14 @@ public class GUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a new Maze to the collection and updates the main menu
+    // EFFECTS: adds a new Maze to the collection (if there are less than MAX_MAZES) and updates the main menu
     private void addMaze() {
-        collection.add(new Maze());
-        mainMenu();
+        if (collection.size() == MAX_MAZES) {
+            JOptionPane.showMessageDialog(window, "Cannot have more than " + MAX_MAZES + " mazes.");
+        } else {
+            collection.add(new Maze());
+            displayMenu();
+        }
     }
 
     // EFFECTS: saves the collection to file
@@ -152,7 +160,7 @@ public class GUI {
                     + "\nPlease ensure your data folder is in the same directory as Maze Runner.jar");
         }
 
-        mainMenu();
+        displayMenu();
     }
 
     // MODIFIES: this
@@ -166,13 +174,14 @@ public class GUI {
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         }
 
+        currentMazeNum = n;
         window.addKeyListener(keyHandler);
-        updateWindow();
+        displayMaze();
     }
 
     // MODIFIES: this
-    // EFFECTS: fills window with maze contents
-    private void updateWindow() {
+    // EFFECTS: fills window with current maze contents
+    private void displayMaze() {
         window.getContentPane().removeAll();
         window.repaint();
         window.revalidate();
@@ -182,6 +191,10 @@ public class GUI {
 
         JButton exit = newButton("Exit", W_WIDTH - B_WIDTH - 20, 10 + B_HEIGHT, B_WIDTH, B_HEIGHT, B_COLOUR, true);
         exit.addActionListener(e -> exitMaze());
+
+        JButton delete = newButton("Delete", W_WIDTH - B_WIDTH - 20, 15 + (2 * B_HEIGHT), B_WIDTH, B_HEIGHT, B_COLOUR, true);
+        delete.setForeground(Color.RED);
+        delete.addActionListener(e -> displayDeleteWarning());
 
         passwordDisplay = new JTextField("Arrow keys to move, WASD to break a wall, Enter to generate password");
         passwordDisplay.setBounds(0, (Maze.ROWS * SLOT_SIZE) + 5, P_WIDTH, P_HEIGHT);
@@ -208,19 +221,49 @@ public class GUI {
     // EFFECTS: resets the Runner and updates the window
     private void reset() {
         runner.reset();
-        updateWindow();
+        displayMaze();
     }
 
     // MODIFIES: this
     // EFFECTS: resets the current maze and returns to the main menu
     private void exitMaze() {
         runner.getMaze().reset();
-
         window.removeKeyListener(keyHandler);
-        mainMenu();
+        displayMenu();
     }
 
-    // code modeled on application found at https://github.students.cs.ubc.ca/CPSC210/SpaceInvadersRefactored
+    // MODIFIES: this
+    // EFFECTS: fills window with a confirmation warning for deleting the current maze
+    private void displayDeleteWarning() {
+        window.getContentPane().removeAll();
+        window.repaint();
+        window.revalidate();
+
+        JOptionPane.showMessageDialog(window, "Are you sure you want to delete this maze?\n" +
+                "Warning: This action cannot be undone. If you have used passwords generated from this maze for any\n" +
+                "accounts, those passwords will not be recoverable.");
+
+        JButton yes = newButton("Yes", 5, 5, B_WIDTH, B_HEIGHT, B_COLOUR, true);
+        yes.setForeground(Color.RED);
+        yes.addActionListener(e -> deleteCurrentMaze());
+
+        JButton no = newButton("No", 10 + B_WIDTH, 5, B_WIDTH, B_HEIGHT, B_COLOUR, true);
+        no.addActionListener(e -> displayMaze());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deletes the current maze from the collection and returns to the main menu
+    private void deleteCurrentMaze() {
+        try {
+            collection.remove(currentMazeNum);
+        } catch (MazeNotFoundException e) {
+            JOptionPane.showMessageDialog(window, "Error: Maze does not exist. Please restart the app.");
+            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+        }
+
+        displayMenu();
+    }
+
     /*
     A key handler to respond to key events
      */
@@ -256,7 +299,7 @@ public class GUI {
         }
 
         if (keyCode != 10) {
-            updateWindow();
+            displayMaze();
         }
     }
 }

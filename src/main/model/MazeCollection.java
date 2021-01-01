@@ -40,7 +40,7 @@ public class MazeCollection implements Writable {
     // MODIFIES: this
     // EFFECTS: removes the ith maze
     //          if there is no ith maze, throws a MazeNotFoundException
-    public void removeMaze(int i) throws MazeNotFoundException {
+    public void remove(int i) throws MazeNotFoundException {
         if (mazes.size() < i) {
             throw new MazeNotFoundException();
         }

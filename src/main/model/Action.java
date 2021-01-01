@@ -60,13 +60,13 @@ public class Action {
     // REQUIRES: characters is a valid list of characters from a Maze
     // MODIFIES: this
     // EFFECTS: returns a character from the given list depending on which set of indices this Action refers to
-    //          adds 1 to currentPosition, but does not go over this.charPositions.length - 1
+    //          increments currentPosition, but does not go over this.charPositions.length - 1
     public char nextCharacter(ArrayList<Character> characters) {
         char nextChar = characters.get(charPositions[currentPosition]);
         if (currentPosition == charPositions.length - 1) {
             currentPosition = 0;
         } else {
-            currentPosition += 1;
+            currentPosition++;
         }
         return nextChar;
     }

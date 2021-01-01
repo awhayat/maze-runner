@@ -63,7 +63,7 @@ public class MazeCollectionTest {
         mc.add(maze1);
 
         try {
-            mc.removeMaze(1);
+            mc.remove(1);
         } catch (MazeNotFoundException e) {
             fail("MazeNotFoundException should not have been thrown.");
         }
@@ -75,7 +75,7 @@ public class MazeCollectionTest {
         mc.add(maze2);
 
         try {
-            mc.removeMaze(2);
+            mc.remove(2);
         } catch (MazeNotFoundException e) {
             fail("MazeNotFoundException should not have been thrown.");
         }
@@ -85,7 +85,7 @@ public class MazeCollectionTest {
         assertEquals(1, mc.size());
 
         try {
-            mc.removeMaze(3);
+            mc.remove(3);
             fail("MazeNotFoundException should have been thrown.");
         } catch (MazeNotFoundException e) {
             // expected

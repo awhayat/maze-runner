@@ -14,15 +14,15 @@ The slots in the maze are represented by a 2D array of integers:
 - a 1 represents a blocked space (wall segment)
 - a 2 represents the current position of the Runner
 
-Each maze also has a uniquely sorted (random) list of characters (alphanumeric and some special symbols).
+Each maze also has a random list of characters (alphanumeric and some special symbols).
  */
 
 public class Maze implements Writable {
     public static final int ROWS = 20;
     public static final int COLS = 20;
+
     private int[][] slots;
     private final int[][] originalSlots;
-
     private final ArrayList<Character> characters;
 
     // MODIFIES: this
@@ -33,13 +33,14 @@ public class Maze implements Writable {
     public Maze() {
         slots = new int[ROWS][COLS];
         originalSlots = new int[ROWS][COLS];
+
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if ((i == (ROWS / 2) - 1) && (j == (COLS / 2) - 1)) {
                     slots[i][j] = 2;
                     originalSlots[i][j] = 2;
                 } else {
-                    // 0, 1, or 2; a 2 is reassigned to 0 in order to make 2/3 of the slots empty
+                    // 0, 1, or 2; 2's are reassigned to 0's in order to make 2/3 of the slots empty
                     int content = (int) (Math.random() * 3);
                     if (content == 2) {
                         content = 0;
@@ -81,9 +82,9 @@ public class Maze implements Writable {
     // REQUIRES: posX is between 0 and Maze.COLS - 1
     //           posY is between 0 and Maze.ROWS - 1
     //           to is one of:
-    //           - 0
-    //           - 1
-    //           - 2
+    //           - 0 (empty slot)
+    //           - 1 (wall segment)
+    //           - 2 (runner position)
     // MODIFIES: this
     // EFFECTS: updates the content of the maze at position posX, posY to the given integer
     public void editSlot(int posX, int posY, int to) {
@@ -98,6 +99,7 @@ public class Maze implements Writable {
         }
     }
 
+    // EFFECTS: returns the random characters associated with this maze
     public ArrayList<Character> getCharacters() {
         return characters;
     }

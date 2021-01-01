@@ -9,7 +9,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MazeTest {
+public class MazeTest {
     private Maze testMaze1;
     private Maze testMaze2;
 

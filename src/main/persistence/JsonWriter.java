@@ -11,8 +11,8 @@ import java.io.PrintWriter;
 // code modeled on application found at https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
+    private final String destination;
     private PrintWriter writer;
-    private String destination;
 
     // EFFECTS: constructs writer to write to destination file
     public JsonWriter(String destination) {

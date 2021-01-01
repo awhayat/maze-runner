@@ -217,12 +217,23 @@ public class RunnerTest {
         assertEquals(0, runner.generatePassword().length());
 
         runner.moveLeft();
-        assertEquals(1, runner.generatePassword().length());
+        String password1 = runner.generatePassword();
+
+        assertEquals(1, password1.length());
 
         runner.moveDown();
-        assertEquals(2, runner.generatePassword().length());
+        String password2 = runner.generatePassword();
+
+        assertEquals(2, password2.length());
+        assertNotEquals(password1.substring(0, 1), password2.substring(0, 1));
 
         runner.breakWall("L");
+        String password3 = runner.generatePassword();
+
         assertEquals(3, runner.generatePassword().length());
+        assertNotEquals(password2.substring(0, 1), password3.substring(0, 1));
+
+        runner.reset();
+        assertEquals(0, runner.generatePassword().length());
     }
 }

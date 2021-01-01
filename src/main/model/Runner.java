@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /*
 Represents a character in a particular Maze.
-The actions of the character are logged, and a password can be generated based on their order.
+The actions of the Runner are logged, and a password can be generated based on their order.
  */
 
 public class Runner {
@@ -143,10 +143,9 @@ public class Runner {
     }
 
     // MODIFIES: this
-    // EFFECTS: if there is already an Action in actions with the given description, adds another reference to
+    // EFFECTS: if there is already an Action with the given description, adds another reference to
     //          that Action to the list.
-    //          if there is not already an Action in actions with the given description, adds a new Action with
-    //          the given description.
+    //          if there is not already an Action in actions with the given description, adds a new Action.
     private void updateActions(String actionDescription) {
         boolean duplicate = false;
         for (Action action : actions) {
@@ -164,7 +163,7 @@ public class Runner {
     // MODIFIES: this, this.maze
     // EFFECTS: resets this.maze to its original state.
     //          updates the position of the Runner to the centre of the Maze.
-    //          clears all actions in this.actions.
+    //          clears all logged actions
     public void reset() {
         maze.reset();
         posX = (Maze.ROWS / 2) - 1;
@@ -172,7 +171,7 @@ public class Runner {
         actions.clear();
     }
 
-    // EFFECTS: returns a password based on the actions taken so far and the character arrangement in this.maze
+    // EFFECTS: returns a password based on the actions taken so far and the character order in this.maze
     public String generatePassword() {
         String password = "";
         for (Action action : actions) {
