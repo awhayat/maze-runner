@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /*
 A graphical user interface for the application
@@ -24,8 +26,9 @@ public class GUI {
     // image from https://www.netclipart.com/pp/m/12-122800_person-running-clipart.png (non-commercial use)
 
     private MazeCollection collection;
-    private final int MAX_MAZES = 60;
-    private int currentMazeNum;
+    private static final int MAX_MAZES = 60;
+    private ArrayList<String> mazeNames;
+    private int currentMazeNum; // the position in the collection of the maze currently in use
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -77,9 +80,15 @@ public class GUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes maze collection, JSON writer/reader, and window
+    // EFFECTS: initializes maze collection, mazeNames, JSON writer/reader, and window
     private void init() {
         collection = new MazeCollection();
+
+        mazeNames = new ArrayList<>();
+        Collections.addAll(mazeNames, "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta",
+                "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
+                "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma",
+                "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega");
 
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -113,12 +122,16 @@ public class GUI {
         int x = 5;
         int y = 5;
         for (int i = 1; i <= collection.size(); i++) {
-            JButton mazeButton = newButton("Maze " + i, x, y, B_WIDTH, B_HEIGHT, B_COLOUR, true);
-            int n = i;
-            mazeButton.addActionListener(e -> enterMaze(n));
+            try {
+                JButton mazeButton = newButton(collection.getMaze(i).getName(), x, y, B_WIDTH, B_HEIGHT, B_COLOUR, true);
+                int n = i;
+                mazeButton.addActionListener(e -> enterMaze(n));
+            } catch (MazeNotFoundException e) {
+                JOptionPane.showMessageDialog(window, "Error: Mazes could not be displayed. Please restart the app.");
+                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            }
 
             y += 5 + B_HEIGHT;
-
             if ((W_HEIGHT - y) < B_HEIGHT) {
                 x += 5 + B_WIDTH;
                 y = 5;
@@ -127,12 +140,17 @@ public class GUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a new Maze to the collection (if there are less than MAX_MAZES) and updates the main menu
+    // EFFECTS: adds a new maze to the collection (if there are less than MAX_MAZES) and updates the main menu
+    //          assigns a random name from mazeNames
     private void addMaze() {
         if (collection.size() == MAX_MAZES) {
             JOptionPane.showMessageDialog(window, "Cannot have more than " + MAX_MAZES + " mazes.");
         } else {
-            collection.add(new Maze());
+            Maze maze = new Maze();
+            int nameIndex = (int) (Math.random() * mazeNames.size());
+            maze.setName(mazeNames.get(nameIndex));
+
+            collection.add(maze);
             displayMenu();
         }
     }
@@ -239,9 +257,10 @@ public class GUI {
         window.repaint();
         window.revalidate();
 
-        JOptionPane.showMessageDialog(window, "Are you sure you want to delete this maze?\n" +
-                "Warning: This action cannot be undone. If you have used passwords generated from this maze for any\n" +
-                "accounts, those passwords will not be recoverable.");
+        JOptionPane.showMessageDialog(window, """
+                Are you sure you want to delete this maze?
+                Warning: This action cannot be undone. If you have used passwords generated from this maze for any
+                accounts, those passwords will not be recoverable.""");
 
         JButton yes = newButton("Yes", 5, 5, B_WIDTH, B_HEIGHT, B_COLOUR, true);
         yes.setForeground(Color.RED);

@@ -13,11 +13,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // code modeled on application found at https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonTest {
-    private int[][] correctSlots1;
-    private int[][] correctSlots2;
-    private ArrayList<Character> correctCharacters1;
-    private ArrayList<Character> correctCharacters2;
-
     @Test
     public void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
@@ -64,17 +59,22 @@ public class JsonTest {
     public void testJsonGeneralCollection() {
         try {
             MazeCollection mc = new MazeCollection();
-            mc.add(new Maze());
 
-            try {
-                correctSlots1 = mc.getMaze(1).getSlots();
-                correctCharacters1 = mc.getMaze(1).getCharacters();
-                mc.add(new Maze());
-                correctSlots2 = mc.getMaze(2).getSlots();
-                correctCharacters2 = mc.getMaze(2).getCharacters();
-            } catch (MazeNotFoundException e) {
-                System.out.println("Error: Maze does not exist.");
-            }
+            Maze maze1 = new Maze();
+            maze1.setName("Alpha");
+            mc.add(maze1);
+
+            Maze maze2 = new Maze();
+            maze2.setName("Beta");
+            mc.add(maze2);
+
+            String correctName1 = maze1.getName();
+            int[][] correctSlots1 = maze1.getSlots();
+            ArrayList<Character> correctCharacters1 = maze1.getCharacters();
+
+            String correctName2 = maze2.getName();
+            int[][] correctSlots2 = maze2.getSlots();
+            ArrayList<Character> correctCharacters2 = maze2.getCharacters();
 
             JsonWriter writer = new JsonWriter("./data/testJsonGeneralCollection.json");
             writer.open();
@@ -87,8 +87,8 @@ public class JsonTest {
             assertEquals(2, mc.size());
 
             try {
-                checkMaze(correctSlots1, correctCharacters1, mc.getMaze(1));
-                checkMaze(correctSlots2, correctCharacters2, mc.getMaze(2));
+                checkMaze(correctName1, correctSlots1, correctCharacters1, mc.getMaze(1));
+                checkMaze(correctName2, correctSlots2, correctCharacters2, mc.getMaze(2));
             } catch (MazeNotFoundException e) {
                 System.out.println("Error: Maze does not exist.");
             }
@@ -97,16 +97,17 @@ public class JsonTest {
         }
     }
 
-    public static void checkMaze(int[][] slots, ArrayList<Character> characters, Maze maze) {
-        int[][] mazeSlots = maze.getSlots();
-        ArrayList<Character> mazeCharacters = maze.getCharacters();
+    public static void checkMaze(String name, int[][] slots, ArrayList<Character> characters, Maze maze) {
+        assertEquals(name, maze.getName());
 
+        int[][] mazeSlots = maze.getSlots();
         for (int i = 0; i < Maze.ROWS; i++) {
             for (int j = 0; j < Maze.COLS; j++) {
                 assertEquals(slots[i][j], mazeSlots[i][j]);
             }
         }
 
+        ArrayList<Character> mazeCharacters = maze.getCharacters();
         for (int i = 0; i < characters.size(); i++) {
             assertEquals(characters.get(i), mazeCharacters.get(i));
         }

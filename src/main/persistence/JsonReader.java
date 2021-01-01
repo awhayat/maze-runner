@@ -61,6 +61,8 @@ public class JsonReader {
     // MODIFIES: mc
     // EFFECTS: parses Maze from JSON object and adds it to MazeCollection
     private void addMaze(MazeCollection mc, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+
         JSONArray slotsArray = jsonObject.getJSONArray("slots");
         int[][] slots = new int[Maze.ROWS][Maze.COLS];
 
@@ -80,7 +82,7 @@ public class JsonReader {
             characters.add(c);
         }
 
-        Maze maze = new Maze(slots, characters);
+        Maze maze = new Maze(name, slots, characters);
         mc.add(maze);
     }
 }

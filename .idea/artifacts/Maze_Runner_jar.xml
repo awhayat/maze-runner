@@ -2,19 +2,16 @@
   <artifact type="jar" name="Maze Runner:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Maze_Runner_jar</output-path>
     <root id="archive" name="Maze Runner.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/Maze Runner/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="Maze Runner" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/opentest4j-1.1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-engine-5.4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/apiguardian-api-1.0.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-platform-commons-1.4.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-params-5.4.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20200518.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/apiguardian-api-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-api-5.4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/opentest4j-1.1.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-platform-engine-1.4.2.jar" path-in-jar="/" />
       <element id="library" level="project" name="junit-jupiter-5.4.2" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-api-5.4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20200518.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -21,16 +21,19 @@ public class Maze implements Writable {
     public static final int ROWS = 20;
     public static final int COLS = 20;
 
+    private String name;
     private int[][] slots;
     private final int[][] originalSlots;
     private final ArrayList<Character> characters;
 
     // MODIFIES: this
-    // EFFECTS: constructs a new Maze of height ROWS and width COLS
-    //          each slot is randomly filled with a 0 (2/3) or a 1 (1/3) (centre slot is filled with a 2)
+    // EFFECTS: constructs a new unnamed Maze of height ROWS and width COLS
+    //          each slot is randomly filled with an empty space (70%) or a wall (30%) (centre slot is Runner position)
     //          saves a copy of maze slots to originalSlots
     //          instantiates characters in random order
     public Maze() {
+        name = "none";
+
         slots = new int[ROWS][COLS];
         originalSlots = new int[ROWS][COLS];
 
@@ -40,11 +43,15 @@ public class Maze implements Writable {
                     slots[i][j] = 2;
                     originalSlots[i][j] = 2;
                 } else {
-                    // 0, 1, or 2; 2's are reassigned to 0's in order to make 2/3 of the slots empty
-                    int content = (int) (Math.random() * 3);
-                    if (content == 2) {
+                    // 0-9; a 0, 1, or 2 means a wall segment, anything else means an empty space
+                    int content = (int) (Math.random() * 10);
+
+                    if (content == 0 || content == 1 || content == 2) {
+                        content = 1;
+                    } else {
                         content = 0;
                     }
+
                     slots[i][j] = content;
                     originalSlots[i][j] = content;
                 }
@@ -60,9 +67,11 @@ public class Maze implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: constructs a new Maze of height ROWS and width COLS, with the given slots and characters
+    // EFFECTS: constructs a new Maze of height ROWS and width COLS, with the given name, slots and characters
     //          saves a copy of maze slots to originalSlots
-    public Maze(int[][] slots, ArrayList<Character> characters) {
+    public Maze(String name, int[][] slots, ArrayList<Character> characters) {
+        this.name = name;
+
         this.slots = slots;
         this.originalSlots = new int[ROWS][COLS];
         for (int i = 0; i < ROWS; i++) {
@@ -70,6 +79,17 @@ public class Maze implements Writable {
         }
 
         this.characters = characters;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the name of this maze to the given string
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // EFFECTS: returns the name of this maze
+    public String getName() {
+        return name;
     }
 
     // REQUIRES: posX is between 0 and Maze.COLS - 1
@@ -104,7 +124,7 @@ public class Maze implements Writable {
         return characters;
     }
 
-    // EFFECTS: returns this Maze as a JSON Object
+    // EFFECTS: returns this maze as a JSON Object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
 
@@ -124,8 +144,9 @@ public class Maze implements Writable {
             charString += Character.toString(characters.get(i));
         }
 
-        json.put("slots", slotsArray);
+        json.put("name", name);
         json.put("characters", charString);
+        json.put("slots", slotsArray);
 
         return json;
     }

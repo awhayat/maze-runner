@@ -65,6 +65,8 @@ public class MazeTest {
 
     @Test
     public void testPreciseConstructor() {
+        String name = "Alpha";
+
         int[][] slots = new int[Maze.ROWS][Maze.COLS];
         for (int i = 0; i < Maze.ROWS; i++) {
             for (int j = 0; j < Maze.COLS; j++) {
@@ -84,9 +86,9 @@ public class MazeTest {
         }
         Collections.shuffle(characters);
 
-        Maze preciseMaze = new Maze(slots, characters);
+        Maze preciseMaze = new Maze(name, slots, characters);
 
-        JsonTest.checkMaze(slots, characters, preciseMaze);
+        JsonTest.checkMaze(name, slots, characters, preciseMaze);
     }
 
     @Test
@@ -129,5 +131,17 @@ public class MazeTest {
 
         assertEquals(og1, testMaze1.getSlot(16, 6));
         assertEquals(og2, testMaze1.getSlot(3, 11));
+    }
+
+    @Test
+    public void testName() {
+        assertEquals("none", testMaze1.getName());
+        assertEquals("none", testMaze2.getName());
+
+        testMaze1.setName("alpha");
+        testMaze2.setName("beta");
+
+        assertEquals("alpha", testMaze1.getName());
+        assertEquals("beta", testMaze2.getName());
     }
 }
