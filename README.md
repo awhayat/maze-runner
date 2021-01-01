@@ -11,13 +11,8 @@ This app presents a maze occupied by a controllable on-screen character. As you 
 
 The only thing you need to remember is which maze to use, and what kind of path to take through it; the same password is regenerated every time.
 
-Today we handle a huge variety of online accounts. Some are minor or of little importance, but others require strong, unique passwords that are updated regularly, such as online banking, education, and social media. One way to keep effective passwords is to store them in a password manager program. However, by doing so you are "putting all your eggs in one basket" provided by a third party company, and you still need to keep your master password secure. Password managers can and have been hacked.
+Today we handle a huge variety of online accounts. Some are minor or of little importance, but others require strong, unique passwords that are updated regularly, such as online banking, education, and social media. One way to keep effective passwords is to store them in a password manager program. However, by doing so you are putting all your eggs in one basket provided by a third party company, and you still need to keep your master password secure. Password managers can and have been hacked.
 
-With the Maze Runner, your passwords aren't stored anywhere at all; they are generated upon request. Even if someone gains access to your app files, they will not be able to extract any password unless they know exactly which maze to use, and exactly what kind of path to take through it.
+With the Maze Runner, your passwords aren't stored anywhere at all; they are generated upon request. Even if someone gains access to your app files, they will not be able to extract any password unless they know exactly which maze to use, and what kind of path to take through it.
 
 ![screenshot](https://github.com/awhayat/maze-runner/blob/main/screenshot.PNG)
-
-#### Future updates (make path easier to remember):
-- update mazes from "random" walls to orderly corridors
-- add target locations to each maze
-- add option to name a maze based on the account its password is used for
