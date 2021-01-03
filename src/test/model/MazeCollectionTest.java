@@ -90,6 +90,22 @@ public class MazeCollectionTest {
         } catch (MazeNotFoundException e) {
             // expected
         }
+
+        try {
+            mc.remove(maze1);
+        } catch (MazeNotFoundException e) {
+            fail("MazeNotFoundException should not have been thrown.");
+        }
+
+        assertFalse(mc.getMazes().contains(maze1));
+        assertEquals(0, mc.size());
+
+        try {
+            mc.remove(new Maze());
+            fail("MazeNotFoundException should have been thrown.");
+        } catch (MazeNotFoundException e) {
+            // expected
+        }
     }
 
     @Test

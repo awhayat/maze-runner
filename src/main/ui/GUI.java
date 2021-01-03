@@ -28,7 +28,6 @@ public class GUI {
     private MazeCollection collection;
     private static final int MAX_MAZES = 60;
     private ArrayList<String> mazeNames;
-    private int currentMazeNum; // the position in the collection of the maze currently in use
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -121,15 +120,9 @@ public class GUI {
 
         int x = 5;
         int y = 5;
-        for (int i = 1; i <= collection.size(); i++) {
-            try {
-                JButton mazeButton = newButton(collection.getMaze(i).getName(), x, y, B_WIDTH, B_HEIGHT, B_COLOUR, true);
-                int n = i;
-                mazeButton.addActionListener(e -> enterMaze(n));
-            } catch (MazeNotFoundException e) {
-                JOptionPane.showMessageDialog(window, "Error: Mazes could not be displayed. Please restart the app.");
-                window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-            }
+        for (Maze maze : collection) {
+            JButton mazeButton = newButton(maze.getName(), x, y, B_WIDTH, B_HEIGHT, B_COLOUR, true);
+            mazeButton.addActionListener(e -> enterMaze(maze));
 
             y += 5 + B_HEIGHT;
             if ((W_HEIGHT - y) < B_HEIGHT) {
@@ -182,17 +175,11 @@ public class GUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: instantiates runner in the collection's nth maze
+    // EFFECTS: instantiates a new runner in the given maze from the collection
     //          opens maze for use in window
-    private void enterMaze(int n) {
-        try {
-            runner = new Runner(collection.getMaze(n));
-        } catch (MazeNotFoundException e) {
-            JOptionPane.showMessageDialog(window, "Error: Maze does not exist. Please restart the app.");
-            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-        }
+    private void enterMaze(Maze maze) {
+        runner = new Runner(maze);
 
-        currentMazeNum = n;
         window.addKeyListener(keyHandler);
         displayMaze();
     }
@@ -246,6 +233,7 @@ public class GUI {
     // EFFECTS: resets the current maze and returns to the main menu
     private void exitMaze() {
         runner.getMaze().reset();
+
         window.removeKeyListener(keyHandler);
         displayMenu();
     }
@@ -257,10 +245,10 @@ public class GUI {
         window.repaint();
         window.revalidate();
 
-        JOptionPane.showMessageDialog(window, """
-                Are you sure you want to delete this maze?
-                Warning: This action cannot be undone. If you have used passwords generated from this maze for any
-                accounts, those passwords will not be recoverable.""");
+        JOptionPane.showMessageDialog(window,
+                "Are you sure you want to delete " + runner.getMaze().getName() + "?"
+                + "\nWarning: this action cannot be undone. If you have used passwords generated from this maze for any"
+                + "\naccounts, those passwords will not be recoverable.");
 
         JButton yes = newButton("Yes", 5, 5, B_WIDTH, B_HEIGHT, B_COLOUR, true);
         yes.setForeground(Color.RED);
@@ -274,7 +262,7 @@ public class GUI {
     // EFFECTS: deletes the current maze from the collection and returns to the main menu
     private void deleteCurrentMaze() {
         try {
-            collection.remove(currentMazeNum);
+            collection.remove(runner.getMaze());
         } catch (MazeNotFoundException e) {
             JOptionPane.showMessageDialog(window, "Error: Maze does not exist. Please restart the app.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
