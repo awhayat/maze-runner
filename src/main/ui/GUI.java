@@ -268,6 +268,7 @@ public class GUI {
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
         }
 
+        window.removeKeyListener(keyHandler);
         displayMenu();
     }
 
