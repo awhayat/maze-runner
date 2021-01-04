@@ -91,6 +91,9 @@ public class Maze implements Writable {
         slots[target1Row][target1Col] = 3;
         slots[target2Row][target2Col] = 3;
         slots[target3Row][target3Col] = 3;
+        originalSlots[target1Row][target1Col] = 3;
+        originalSlots[target2Row][target2Col] = 3;
+        originalSlots[target3Row][target3Col] = 3;
     }
 
     // MODIFIES: this
