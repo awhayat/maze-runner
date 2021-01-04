@@ -30,7 +30,7 @@ public class MazeTest {
         for (int i = 0; i < slots1.length; i++) {
             for (int j = 0; j < slots1[0].length; j++) {
                 int content = slots1[i][j];
-                assertTrue((content == 0) || (content == 1) || (content == 2));
+                assertTrue((content == 0) || (content == 1) || (content == 2) || (content == 3));
             }
         }
 
@@ -40,7 +40,7 @@ public class MazeTest {
         for (int i = 0; i < slots2.length; i++) {
             for (int j = 0; j < slots2[0].length; j++) {
                 int content = slots2[i][j];
-                assertTrue((content == 0) || (content == 1) || (content == 2));
+                assertTrue((content == 0) || (content == 1) || (content == 2) || (content == 3));
             }
         }
     }

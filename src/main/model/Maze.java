@@ -10,9 +10,10 @@ import java.util.Collections;
 /*
 Represents a maze of height ROWS and width COLS.
 The slots in the maze are represented by a 2D array of integers:
-- a 0 represents an empty space
-- a 1 represents a blocked space (wall segment)
-- a 2 represents the current position of the Runner
+- a 0 represents an empty space (70%)
+- a 1 represents a wall segment (30%)
+- a 2 represents the current position of the Runner (centre slot)
+- a 3 represents a target location (3 random slots)
 
 Each maze also has a random list of characters (alphanumeric and some special symbols).
  */
@@ -27,8 +28,7 @@ public class Maze implements Writable {
     private final ArrayList<Character> characters;
 
     // MODIFIES: this
-    // EFFECTS: constructs a new unnamed Maze of height ROWS and width COLS
-    //          each slot is randomly filled with an empty space (70%) or a wall (30%) (centre slot is Runner position)
+    // EFFECTS: constructs a new unnamed Maze of height ROWS and width COLS, randomly fills each slot
     //          saves a copy of maze slots to originalSlots
     //          instantiates characters in random order
     public Maze() {
@@ -44,9 +44,10 @@ public class Maze implements Writable {
                     originalSlots[i][j] = 2;
                 } else {
                     // 0-9; a 0, 1, or 2 means a wall segment, anything else means an empty space
-                    int content = (int) (Math.random() * 10);
+                    int prob = (int) (Math.random() * 10);
 
-                    if (content == 0 || content == 1 || content == 2) {
+                    int content;
+                    if (prob == 0 || prob == 1 || prob == 2) {
                         content = 1;
                     } else {
                         content = 0;
@@ -58,12 +59,38 @@ public class Maze implements Writable {
             }
         }
 
+        targetLocations();
+
         characters = new ArrayList<>();
         char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!@#$%".toCharArray();
         for (char c : chars) {
             characters.add(c);
         }
         Collections.shuffle(characters);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates 3 random target locations in the maze
+    private void targetLocations() {
+        // somewhere in top half
+        int target1Row = (int) (Math.random() * (ROWS / 2 - 1));
+        int target1Col = (int) (Math.random() * COLS);
+
+        // somewhere in bottom half
+        int target2Row = (int) (Math.random() * (ROWS / 2 - 1)) + (ROWS / 2);
+        int target2Col = (int) (Math.random() * COLS);
+
+        // anywhere but the centre
+        int target3Row;
+        int target3Col;
+        do {
+            target3Row = (int) (Math.random() * ROWS);
+            target3Col = (int) (Math.random() * COLS);
+        } while (target3Row == (ROWS / 2 - 1) && target3Col == (COLS / 2 - 1));
+
+        slots[target1Row][target1Col] = 3;
+        slots[target2Row][target2Col] = 3;
+        slots[target3Row][target3Col] = 3;
     }
 
     // MODIFIES: this

@@ -45,6 +45,7 @@ public class GUI {
 
     private static final int SLOT_SIZE = 20;
     private static final Color WALL_COLOUR = new Color(2, 182, 158);
+    private static final Color TARGET_COLOUR = new Color(194, 146, 14);
 
     private JTextField passwordDisplay;
     private static final int P_WIDTH = Maze.ROWS * SLOT_SIZE;
@@ -216,6 +217,8 @@ public class GUI {
                     JLabel runnerImage = new JLabel(RUNNER_IMAGE);
                     runnerImage.setBounds(j * SLOT_SIZE, i * SLOT_SIZE, SLOT_SIZE, SLOT_SIZE);
                     window.add(runnerImage);
+                } else if (content == 3) {
+                    newButton("", j * SLOT_SIZE, i * SLOT_SIZE, SLOT_SIZE, SLOT_SIZE, TARGET_COLOUR, false);
                 }
                 // empty space if content == 0
             }
