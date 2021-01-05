@@ -15,4 +15,11 @@ Today we handle a huge variety of online accounts. Some are minor or of little i
 
 With the Maze Runner, your passwords aren't stored anywhere at all; they are generated upon request. Even if someone gains access to your app files, they will not be able to extract any password unless they know exactly which maze to use, and what kind of path to take through it.
 
+#### Set up:
+- download latest release
+- open Maze Runner.jar
+- **do not modify the data folder** e.g. when updating
+- it is recommended to include the data folder in your regular back-up routine, as this saves the mazes you use to generate passwords
+- requires java installed on your computer; latest version can be found [here](https://www.oracle.com/ca-en/java/technologies/javase-downloads.html)
+
 ![screenshot](https://github.com/awhayat/maze-runner/blob/main/screenshot.PNG)
