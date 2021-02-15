@@ -20,6 +20,6 @@ With the Maze Runner, your passwords aren't stored anywhere at all; they are gen
 - open Maze Runner.jar
 - **do not modify the data folder** e.g. when updating
 - it is recommended to include the data folder in your regular back-up routine, as this saves the mazes you use to generate passwords
-- requires java installed on your computer; latest version can be found [here](https://www.oracle.com/ca-en/java/technologies/javase-downloads.html)
+- requires Java installed on your computer; latest version can be found [here](https://www.oracle.com/ca-en/java/technologies/javase-downloads.html)
 
 ![screenshot](https://github.com/awhayat/maze-runner/blob/main/screenshot.PNG)
