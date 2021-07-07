@@ -28,7 +28,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes a JSON representation of the given MazeCollection to file
     public void write(MazeCollection mc) {
-        JSONObject json = mc.toJson();
+        JSONObject json = mc.toJSON();
         saveToFile(json.toString(TAB));
     }
 

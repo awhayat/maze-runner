@@ -155,7 +155,7 @@ public class Maze implements Writable {
     }
 
     // EFFECTS: returns this maze as a JSON Object
-    public JSONObject toJson() {
+    public JSONObject toJSON() {
         JSONObject json = new JSONObject();
 
         JSONArray slotsArray = new JSONArray();

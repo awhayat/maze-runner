@@ -71,23 +71,17 @@ public class MazeCollection implements Writable, Iterable<Maze> {
     }
 
     // EFFECTS: returns this MazeCollection as a JSON object
-    public JSONObject toJson() {
+    public JSONObject toJSON() {
         JSONObject json = new JSONObject();
 
-        json.put("mazes", mazesToJson());
-
-        return json;
-    }
-
-    // EFFECTS: returns Mazes in this MazeCollection as a JSON Array
-    private JSONArray mazesToJson() {
-        JSONArray jsonArray = new JSONArray();
-
+        JSONArray mazeArray = new JSONArray();
         for (Maze maze : mazes) {
-            jsonArray.put(maze.toJson());
+            mazeArray.put(maze.toJSON());
         }
 
-        return jsonArray;
+        json.put("mazes", mazeArray);
+
+        return json;
     }
 
     // FOR TESTING:
