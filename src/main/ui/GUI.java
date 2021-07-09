@@ -144,7 +144,7 @@ public class GUI {
             int nameIndex = (int) (Math.random() * mazeNames.size());
             maze.setName(mazeNames.get(nameIndex));
 
-            collection.add(maze);
+            collection.addMaze(maze);
             displayMenu();
         }
     }
@@ -265,7 +265,7 @@ public class GUI {
     // EFFECTS: deletes the current maze from the collection and returns to the main menu
     private void deleteCurrentMaze() {
         try {
-            collection.remove(runner.getMaze());
+            collection.removeMaze(runner.getMaze());
         } catch (MazeNotFoundException e) {
             JOptionPane.showMessageDialog(window, "Error: Maze does not exist. Please restart the app.");
             window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));

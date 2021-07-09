@@ -23,8 +23,8 @@ public class MazeCollectionTest {
     public void testGetMaze() {
         Maze maze1 = new Maze();
         Maze maze2 = new Maze();
-        mc.add(maze1);
-        mc.add(maze2);
+        mc.addMaze(maze1);
+        mc.addMaze(maze2);
 
         try {
             assertEquals(maze1, mc.getMaze(1));
@@ -47,8 +47,8 @@ public class MazeCollectionTest {
 
         Maze maze1 = new Maze();
         Maze maze2 = new Maze();
-        mc.add(maze1);
-        mc.add(maze2);
+        mc.addMaze(maze1);
+        mc.addMaze(maze2);
 
         assertTrue(mc.getMazes().contains(maze1));
         assertTrue(mc.getMazes().contains(maze2));
@@ -60,10 +60,10 @@ public class MazeCollectionTest {
         Maze maze1 = new Maze();
         Maze maze2 = new Maze();
 
-        mc.add(maze1);
+        mc.addMaze(maze1);
 
         try {
-            mc.remove(1);
+            mc.removeMaze(1);
         } catch (MazeNotFoundException e) {
             fail("MazeNotFoundException should not have been thrown.");
         }
@@ -71,11 +71,11 @@ public class MazeCollectionTest {
         assertFalse(mc.getMazes().contains(maze1));
         assertEquals(0, mc.size());
 
-        mc.add(maze1);
-        mc.add(maze2);
+        mc.addMaze(maze1);
+        mc.addMaze(maze2);
 
         try {
-            mc.remove(2);
+            mc.removeMaze(2);
         } catch (MazeNotFoundException e) {
             fail("MazeNotFoundException should not have been thrown.");
         }
@@ -85,14 +85,14 @@ public class MazeCollectionTest {
         assertEquals(1, mc.size());
 
         try {
-            mc.remove(3);
+            mc.removeMaze(3);
             fail("MazeNotFoundException should have been thrown.");
         } catch (MazeNotFoundException e) {
             // expected
         }
 
         try {
-            mc.remove(maze1);
+            mc.removeMaze(maze1);
         } catch (MazeNotFoundException e) {
             fail("MazeNotFoundException should not have been thrown.");
         }
@@ -101,7 +101,7 @@ public class MazeCollectionTest {
         assertEquals(0, mc.size());
 
         try {
-            mc.remove(new Maze());
+            mc.removeMaze(new Maze());
             fail("MazeNotFoundException should have been thrown.");
         } catch (MazeNotFoundException e) {
             // expected
@@ -112,11 +112,11 @@ public class MazeCollectionTest {
     public void testSize() {
         assertEquals(mc.getMazes().size(), mc.size());
 
-        mc.add(new Maze());
+        mc.addMaze(new Maze());
         assertEquals(mc.getMazes().size(), mc.size());
 
-        mc.add(new Maze());
-        mc.add(new Maze());
+        mc.addMaze(new Maze());
+        mc.addMaze(new Maze());
         assertEquals(mc.getMazes().size(), mc.size());
     }
 }

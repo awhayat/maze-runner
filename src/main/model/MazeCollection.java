@@ -34,14 +34,14 @@ public class MazeCollection implements Writable, Iterable<Maze> {
 
     // MODIFIES: this
     // EFFECTS: adds the given Maze to the collection
-    public void add(Maze maze) {
+    public void addMaze(Maze maze) {
         mazes.add(maze);
     }
 
     // MODIFIES: this
     // EFFECTS: removes the given maze
     //          if there is no such maze, throws a MazeNotFoundException
-    public void remove(Maze maze) throws MazeNotFoundException {
+    public void removeMaze(Maze maze) throws MazeNotFoundException {
         if (!mazes.contains(maze)) {
             throw new MazeNotFoundException();
         }
@@ -52,7 +52,7 @@ public class MazeCollection implements Writable, Iterable<Maze> {
     // MODIFIES: this
     // EFFECTS: removes the ith maze
     //          if there is no ith maze, throws a MazeNotFoundException
-    public void remove(int i) throws MazeNotFoundException {
+    public void removeMaze(int i) throws MazeNotFoundException {
         if (mazes.size() < i) {
             throw new MazeNotFoundException();
         }

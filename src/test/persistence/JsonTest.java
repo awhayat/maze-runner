@@ -62,11 +62,11 @@ public class JsonTest {
 
             Maze maze1 = new Maze();
             maze1.setName("Alpha");
-            mc.add(maze1);
+            mc.addMaze(maze1);
 
             Maze maze2 = new Maze();
             maze2.setName("Beta");
-            mc.add(maze2);
+            mc.addMaze(maze2);
 
             String correctName1 = maze1.getName();
             int[][] correctSlots1 = maze1.getSlots();

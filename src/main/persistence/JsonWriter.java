@@ -27,20 +27,14 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes a JSON representation of the given MazeCollection to file
-    public void write(MazeCollection mc) {
-        JSONObject json = mc.toJSON();
-        saveToFile(json.toString(TAB));
+    public void write(MazeCollection collection) {
+        JSONObject jsonCollection = collection.toJSON();
+        writer.print(jsonCollection.toString(TAB));
     }
 
     // MODIFIES: this
     // EFFECTS: closes writer
     public void close() {
         writer.close();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: writes string to file
-    private void saveToFile(String json) {
-        writer.print(json);
     }
 }

@@ -26,8 +26,8 @@ public class JsonReader {
     //          throws IOException if an error occurs reading data from file
     public MazeCollection read() throws IOException {
         String jsonData = readFile(source);
-        JSONObject jsonObject = new JSONObject(jsonData);
-        return parseMazeCollection(jsonObject);
+        JSONObject jsonCollection = new JSONObject(jsonData);
+        return parseMazeCollection(jsonCollection);
     }
 
     // EFFECTS: reads source file as a string and returns it
@@ -42,28 +42,28 @@ public class JsonReader {
     }
 
     // EFFECTS: parses MazeCollection from JSON object and returns it
-    private MazeCollection parseMazeCollection(JSONObject jsonObject) {
-        MazeCollection mc = new MazeCollection();
-        addMazes(mc, jsonObject);
-        return mc;
+    private MazeCollection parseMazeCollection(JSONObject jsonCollection) {
+        MazeCollection collection = new MazeCollection();
+        addMazes(collection, jsonCollection);
+        return collection;
     }
 
     // MODIFIES: mc
     // EFFECTS: parses mazes from JSON object and adds them to MazeCollection
-    private void addMazes(MazeCollection mc, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("mazes");
-        for (Object json : jsonArray) {
-            JSONObject nextMaze = (JSONObject) json;
-            addMaze(mc, nextMaze);
+    private void addMazes(MazeCollection collection, JSONObject jsonCollection) {
+        JSONArray mazeArray = jsonCollection.getJSONArray("mazes");
+        for (Object json : mazeArray) {
+            JSONObject jsonMaze = (JSONObject) json;
+            addMaze(collection, jsonMaze);
         }
     }
 
     // MODIFIES: mc
     // EFFECTS: parses Maze from JSON object and adds it to MazeCollection
-    private void addMaze(MazeCollection mc, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
+    private void addMaze(MazeCollection collection, JSONObject jsonMaze) {
+        String name = jsonMaze.getString("name");
 
-        JSONArray slotsArray = jsonObject.getJSONArray("slots");
+        JSONArray slotsArray = jsonMaze.getJSONArray("slots");
         int[][] slots = new int[Maze.ROWS][Maze.COLS];
 
         for (int i = 0; i < Maze.ROWS; i++) {
@@ -74,7 +74,7 @@ public class JsonReader {
             }
         }
 
-        String charString = jsonObject.getString("characters");
+        String charString = jsonMaze.getString("characters");
         ArrayList<Character> characters = new ArrayList<>();
 
         char[] chars = charString.toCharArray();
@@ -83,6 +83,6 @@ public class JsonReader {
         }
 
         Maze maze = new Maze(name, slots, characters);
-        mc.add(maze);
+        collection.addMaze(maze);
     }
 }
